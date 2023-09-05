@@ -1,5 +1,6 @@
 const { Pool } = require('pg');
 const { nanoid } = require('nanoid');
+const autoBind = require('auto-bind');
 
 const InvariantError = require('../../exceptions/InvariantError');
 const NotFoundError = require('../../exceptions/NotFoundError');
@@ -10,6 +11,8 @@ class NotesService {
     constructor(collaborationService) {
         this._pool = new Pool();
         this._collaborationService = collaborationService;
+
+        autoBind(this);
     }
 
     async addNote({ title, body, tags, owner }) {
